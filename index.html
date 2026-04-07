@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Player</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        iframe {
+            margin-top: 20px;
+            width: 100%;
+            height: 300px;
+            border: none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>YouTube Player</h1>
+    <p>Paste a YouTube link below</p>
+
+    <input id="ytlink" placeholder="https://www.youtube.com/watch?v=VIDEOID">
+    <br>
+    <button onclick="playVideo()">Play Video</button>
+
+    <iframe id="player" allowfullscreen></iframe>
+
+    <script>
+        function playVideo() {
+            let url = document.getElementById("ytlink").value;
+
+            // Convert normal YouTube link to embed format
+            url = url.replace("watch?v=", "embed/");
+
+            // Load into iframe
+            document.getElementById("player").src = url;
+        }
+    </script>
+
+</body>
+</html>
