@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YouTube Player</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial;
+      text-align: center;
+      padding: 20px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 15px;
+    }
+    button {
+      width: 90%;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      background: red;
+      color: white;
+      font-weight: bold;
+    }
+    button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+<h1>YouTube Player</h1>
+<p>Paste a YouTube link below</p>
+
+<input id="ytlink" placeholder="https://www.youtube.com/watch?v=...">
+
+<button onclick="playVideo()">Play Video</button>
+
+<br><br>
+
+<p>Liking this website? Subscribe to the creator!</p>
+<button onclick="subscribe()">Subscribe</button>
+
+<script>
+function playVideo() {
+  const url = document.getElementById("ytlink").value;
+
+  if (!url) {
+    alert("Please paste a YouTube link first");
+    return;
+  }
+
+  // Open the video link
+  window.location.href = url;
+}
+
+function subscribe() {
+  // Your real YouTube channel link
+  window.open("https://youtube.com/@joshuajones-z6k?si=sYR_y3RKW0yE5XyK", "_blank");
+}
+</script>
+
+</body>
+</html>
