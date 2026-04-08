@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YouTube Player</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial;
+      text-align: center;
+      padding: 20px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 15px;
+    }
+    button {
+      width: 90%;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      background: red;
+      color: white;
+      font-weight: bold;
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 10px;
+    }
+    #history {
+      margin-top: 30px;
+      text-align: left;
+      padding: 10px;
+      background: #111;
+      border-radius: 10px;
+    }
+    .history-item {
+      padding: 8px;
+      border-bottom: 1px solid #333;
+      cursor: pointer;
+    }
+    .history-item:hover {
+      background: #222;
+    }
+  </style>
+</head>
+<body>
+
+<h1>YouTube Player</h1>
+<p>Paste a YouTube link below</p>
+
+<input id="ytlink" placeholder="https://www.youtube.com/watch?v=...">
+
+<button onclick="playVideo()">Play Video</button>
+
+<div id="playerArea"></div>
+
+<br><br>
+
+<p>Liking this website? Subscribe to the creator!</p>
+<button onclick="subscribe()">Subscribe</button>
+
+<h2>History</h2>
+<div id="history"></div>
+
+<script>
+// Load history on page start
+window.onload = function() {
+  loadHistory();
+};
+
+function playVideo() {
+  const url = document.getElementById("ytlink").value;
+
+  if (!url) {
+    alert("Please paste a YouTube link first");
+    return;
+  }
+
+  let videoId = "";
+
+  if (url.includes("watch?v=")) {
+    videoId = url.split("watch?v=")[1].split("&")[0];
+  } else if (url.includes("youtu.be/")) {
+    videoId = url.split("youtu.be/")[1].split("?")[0];
+  }
+
+  if (!videoId) {
+    alert("Invalid YouTube link");
+    return;
+  }
+
+  // Show video
+  document.getElementById("playerArea").innerHTML =
+    `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
+
+  // Save to history
+  saveToHistory(url);
+}
+
+function subscribe() {
+  window.open("https://youtube.com/@joshuajones-z6k?si=sYR_y3RKW0yE5XyK", "_blank");
+}
+
+function saveToHistory(url) {
+  let history = JSON.parse(localStorage.getItem("ytHistory")) || [];
+
+  // Add new link to top
+  history.unshift(url);
+
+  // Limit to last 20 videos
+  history = history.slice(0, 20);
+
+  localStorage.setItem("ytHistory", JSON.stringify(history));
+
+  loadHistory();
+}
+
+function loadHistory() {
+  let history = JSON.parse(localStorage.getItem("ytHistory")) || [];
+  const historyDiv = document.getElementById("history");
+
+  historyDiv.innerHTML = "";
+
+  history.forEach((url, index) => {
+    const item = document.createElement("div");
+    item.className = "history-item";
+    item.textContent = url;
+    item.onclick = () => {
+      document.getElementById("ytlink").value = url;
+      playVideo();
+    };
+    historyDiv.appendChild(item);
+  });
+}
+</script>
+
+</body>
+</html>
